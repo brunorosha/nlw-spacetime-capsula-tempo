@@ -1,0 +1,168 @@
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* respeitando os tamanhos das bordas das caixas */
+}
+
+/* (mecanismo de renderização utilizado nos navegadores) para customizando a scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track { /* Definindo cor ao scroll */
+    background-color: #2c2c31;
+}
+
+::-webkit-scrollbar-thumb { /* Definindo cor a barrinha */
+    background-color: #9e93a0;
+}
+
+:root { /* Deixando padrão o tamanho da fonte informada */
+    font-size: 16px;
+}
+
+body {
+    background-color: #000000;
+    color: #aeaeae;
+    font-family: 'roboto', sans-serif;
+
+    /* Aplicando display grid */
+    display: grid;
+    grid-template-areas: 'profile timeline'; /* Pagina em 2 colunas */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100vh;
+}
+
+@keyframes entering { /* Controlando etapas em uma 'sequência de animação' 'definindo estilos para pontos chave. */  
+    0% {
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }       
+}
+
+nav {
+    padding: 64px;
+    grid-area: timeline;
+    
+    overflow-y: scroll; /* Deixando só a minha timeline móvel */
+
+    animation: entering 0.7s ease-in-out; /* Controlando o tempo de entering (Timeline) */
+}
+
+.memory {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin-bottom: 64px;
+}
+
+.memory small {
+    color: #bebebf;
+    font-size: 0.75rem;
+}
+
+.memory h1 {
+    font-size: 2rem;
+    color: #aeaeae;
+}
+
+.memory img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover; /* deixa a imagem na hora da resposividade fique igual uma "capa" e não estique. */
+    border-radius: 8px;
+
+    transition: transform 0.3s ease-in-out; /* Aplicando uma transição da 'img (transform scale 1 ao 1.1) bem suave.*/
+}
+
+.memory:hover img {
+    transform: scale(1.1); /* zoom na img */ 
+}
+
+.memory div {
+    width: 100%;
+    height: 280px;
+    overflow: hidden; /* Escondendo a parte que contaúdo que passa da dimenssão da caixa */
+    border-radius: 8px;  
+}
+
+.memory p {
+    font-size: 1.2rem;
+    color: #bebebf;
+    line-height: 28px;
+}
+
+aside {
+    grid-area: profile;
+    
+    /* Aplicando flexbox */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    border-right: 1px solid;
+    border-image: linear-gradient(#727272, #2c2c31) 1; /* Gradient na borda da divisão da página - e opacity */
+
+    background-image: url(./assets/background.svg);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+/* Pseudo classe :nth-of-type */
+
+aside img:nth-child(2){
+    width: 160px;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    /* Gradient na borda do profile */
+    background: linear-gradient(#D39E33 , #ED5636 , #633BBC) padding-box, linear-gradient(260deg, #D39E33 , #ED5636 , #633BBC) border-box;
+}
+
+aside p {
+    font-size: 2rem;
+    text-align: center;
+}
+
+aside span {
+    font-size: 0.75rem;
+    color: #9e93a0;
+}
+
+aside * { /* Controlando o tempo de entering (só do elmentos dentro do anside) */
+    animation: entering 0.7s ease-in-out; 
+}
+
+/* Resposivo para mobile */
+
+@media (max-width: 768px) {
+    :root {
+        font-size: 14px;
+    }
+
+    body {
+    grid-template-areas: 
+    "profile" 
+    "timeline"; 
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 0.8fr;
+    }
+    
+    aside {
+        border-right: none;
+        padding: 32px 12px;
+    }
+
+    nav {
+        overflow-y: visible;
+        padding: 22px;
+    }
+}
